@@ -1,8 +1,8 @@
 <?php
 
-namespace Saber\VandaPay;
+namespace Saber\Vandapay;
 
-class VandaPay
+class Vandapay
 {
     /** @var string */
     private $pin_api;
