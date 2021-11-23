@@ -1,6 +1,6 @@
 <?php
 
-use Saber\VandaPay\VandaPay;
+use Saber\VandaPay\Vandapay;
 
 if (! function_exists('vandapay')) {
     function vandapay(): Vandapay
