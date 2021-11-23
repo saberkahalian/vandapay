@@ -38,7 +38,7 @@ class Request
     {
         $url = 'https://vandapardakht.com/Request';
 
-        $data = json_encode(array(
+        $data = [
             'pin'           => $this->pin_api,//your api
             'price'         =>$this->amount,
             'callback'      =>$this->callbackUrl ,//your callback with snverify.php
@@ -49,7 +49,7 @@ class Request
             "mobile"        =>$this->mobile,//your customer's mobile  optional
             'ip'            => $_SERVER['REMOTE_ADDR'],
             'callback_type' =>2
-        ));
+        ];
 
 
 
