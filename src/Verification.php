@@ -1,6 +1,6 @@
 <?php
 
-namespace Saber\VandaPay;
+namespace Saber\Vandapay;
 
 use Illuminate\Support\Facades\Http;
 
