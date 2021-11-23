@@ -20,6 +20,9 @@ class RequestResponse
 
     public function __construct(array $result)
     {
+
+dd( $result);
+
         $this->code = $result['data']['code'] ?? $result['errors']['code'];
 
         if ($this->success()) {
