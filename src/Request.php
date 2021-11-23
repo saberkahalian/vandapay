@@ -27,7 +27,7 @@ class Request
     /** @var string */
     private $email;
 
-    public function __construct(string $pin_api, int $amount, string order_id)
+    public function __construct(string $pin_api, int $amount, string $order_id)
     {
         $this->pin_api      = $pin_api;
         $this->amount       = $amount;
