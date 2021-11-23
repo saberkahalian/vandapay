@@ -7,7 +7,7 @@
         "vandapardakht",
         "payment"
     ],
-    "homepage": "https://github.com/saberkahalian/vanapay",
+    "homepage": "https://github.com/saberkahalian/vandapay",
     "license": "MIT",
     "authors": [
         {
@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "saber\\Vandapay\\": "src/"
+            "Saber\\Vandapay\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -31,7 +31,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "saber\\Vandapay\\ServiceProvider"
+                "Saber\\Vandapay\\ServiceProvider"
             ]
         }
     }
