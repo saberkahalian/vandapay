@@ -36,7 +36,7 @@ class Request
 
     public function send(): RequestResponse
     {
-        $url = 'https://vandapardakht.com/Request';
+        $url = config('vandapay.request_url');
 
         $data = [
             'pin'           => $this->pin_api,//your api
