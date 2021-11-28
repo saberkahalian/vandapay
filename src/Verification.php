@@ -36,7 +36,7 @@ class Verification
 
         if ($store_invoice)
         {
-           $invoice = $invoice_model::create($this->bank_return);
+           $invoice = $invoice_model::firstOrCreate($this->bank_return);
         }
 
         $data = [
