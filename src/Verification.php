@@ -6,29 +6,45 @@ use Illuminate\Support\Facades\Http;
 
 class Verification
 {
-    /** @var string */
-    private $merchantId;
 
     /** @var int */
     private $amount;
 
     /** @var string */
-    private $authority;
+    private $pin;
 
-    public function __construct(string $merchantId, int $amount)
+    /** @var array */
+    private $bank_return;
+
+    /** @var string */
+    private $vprescode;
+
+    public function __construct( int $amount,array $bank_return,string $pin)
     {
-        $this->merchantId = $merchantId;
-        $this->amount = $amount;
+        $this->amount       = $amount;
+        $this->pin          = $pin;
+        $this->bank_return = $bank_return;
     }
+    
 
     public function send(): VerificationResponse
     {
-        $url = 'https://api.zarinpal.com/pg/v4/payment/verify.json';
+
+        $url = config('vandapay.verification_url');
+        $store_invoice = config('vandapay.store_invoice');
+        $invoice_model = config('vandapay.invoice_model');
+
+        if ($store_invoice)
+        {
+           $invoice = $invoice_model::create($this->bank_return);
+        }
 
         $data = [
-            'merchant_id' => $this->merchantId,
-            'amount' => $this->amount,
-            'authority' => $this->authority,
+            'pin'       => $this->pin,
+            'price'     => $this->amount,
+            'order_id'  => 1,
+            'vprescode' => $this->vprescode,
+            'Bank_return'=>$this->bank_return,            
         ];
 
         $response = Http::asJson()->acceptJson()->post($url, $data);
@@ -36,9 +52,9 @@ class Verification
         return new VerificationResponse($response->json());
     }
 
-    public function authority(string $authority): self
+    public function vprescode(string $vprescode): self
     {
-        $this->authority = $authority;
+        $this->vprescode = $vprescode;
 
         return $this;
     }

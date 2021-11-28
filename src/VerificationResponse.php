@@ -24,7 +24,7 @@ class VerificationResponse
 
     public function __construct(array $result)
     {
-        $this->code = $result['data']['code'] ?? $result['errors']['code'];
+        $this->code = $result['result'] ?? $result['result'];
 
         if ($this->success()) {
             $this->cardHash = $result['data']['card_hash'];
@@ -33,11 +33,12 @@ class VerificationResponse
             $this->feeType = $result['data']['fee_type'];
             $this->fee = $result['data']['fee'];
         }
+
     }
 
     public function success(): bool
     {
-        return $this->code === 100;
+        return $this->code === 1;
     }
 
     public function cardHash(): string
@@ -65,8 +66,14 @@ class VerificationResponse
         return $this->fee;
     }
 
+    public function code(): int
+    {
+        return $this->code;
+    }
+
     public function error(): Error
     {
         return new Error($this->code);
     }
+
 }

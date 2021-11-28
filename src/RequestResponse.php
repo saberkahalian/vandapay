@@ -1,6 +1,6 @@
 <?php
 
-namespace Saber\Vandapay;
+namespace Saber\VandaPay;
 
 use Illuminate\Http\RedirectResponse;
 
@@ -13,27 +13,26 @@ class RequestResponse
     private $authority;
 
     /** @var string|null */
-    private $feeType;
+    private $formSource;
 
     /** @var int|null */
     private $fee;
 
     public function __construct(array $result)
     {
-
-dd( $result);
-
-        $this->code = $result['data']['code'] ?? $result['errors']['code'];
+        $this->code = $result['result'] ?? $result['result'];
 
         if ($this->success()) {
-
-                    $_SESSION['au']     =$json['au'];
-                    $_SESSION['amount'] =$amount;
+                    
+                    session(['au'        => $result['au']]);
+                    session(['vprescode' => $result['au']]);
+                  /*  $_SESSION['vprescode'] =$amount;
                     $_SESSION['order']  =$order;
+*/
 
-            $this->authority    = $result['data']['authority'];
-            $this->feeType      = $result['data']['fee_type'];
-            $this->fee          = $result['data']['fee'];
+            $this->authority    = $result['au'];
+            $this->formSource    = $result['form'];
+            
         }
     }
 
@@ -42,22 +41,10 @@ dd( $result);
         return $this->code === 1;
     }
 
-    public function url(): string
+
+    public function payform()
     {
-        if (! $this->success()) {
-            return '';
-        }
-
-        $url = 'https://www.zarinpal.com/pg/StartPay/';
-
-        return $url.$this->authority;
-    }
-
-    public function redirect(): ?RedirectResponse
-    {
-        $url = $this->url();
-
-        return $url ? redirect($url) : null;
+        return $this->formSource;
     }
 
     public function authority(): string
@@ -65,9 +52,9 @@ dd( $result);
         return $this->authority;
     }
 
-    public function feeType(): string
+    public function formSource(): string
     {
-        return $this->feeType;
+        return $this->formSource;
     }
 
     public function fee(): int

@@ -10,6 +10,9 @@ class Vandapay
     /** @var int */
     private $amount;
 
+    /** @var array */
+    private $bank_return;
+
     /** @var string */
     private $order_id;
 
@@ -20,6 +23,14 @@ class Vandapay
         return $this;
     }
 
+    public function bank_return(array $bank_return): self
+    {
+        $this->bank_return = $bank_return;
+
+        return $this;
+    }
+
+
     public function amount(int $amount): self
     {
         $this->amount = $amount;
@@ -29,10 +40,11 @@ class Vandapay
 
     public function order_id(string $order_id): self
     {
-        $this->order_id = $order_id;
-
+        $this->order_id         = $order_id;
+         //session(['order_id'        => $order_id ]);
         return $this;
     }
+
     public function request(): Request
     {
         $pin_api = $this->pin_api ?: config('vandapay.pin_api');
@@ -42,6 +54,6 @@ class Vandapay
     public function verification(): Verification
     {
         $pin_api = $this->pin_api ?: config('vandapay.pin_api');
-        return new Verification($pin_api, $this->amount);
+        return new Verification($this->amount,$this->bank_return,$pin_api );
     }
 }
