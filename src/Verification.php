@@ -11,13 +11,16 @@ class Verification
     private $amount;
 
     /** @var string */
+    private $order_id;
+
+    /** @var string */
     private $pin;
 
     /** @var array */
     private $bank_return;
 
     /** @var string */
-    private $vprescode;
+    private $au;
 
     public function __construct( int $amount,array $bank_return,string $pin)
     {
@@ -36,14 +39,14 @@ class Verification
 
         if ($store_invoice)
         {
-           $invoice = $invoice_model::firstOrCreate($this->bank_return);
+          // $invoice = $invoice_model::firstOrCreate($this->bank_return);
         }
 
         $data = [
             'pin'       => $this->pin,
             'price'     => $this->amount,
-            'order_id'  => 1,
-            'vprescode' => $this->vprescode,
+            'order_id'  => $this->order_id,
+            'vprescode' => $this->au,
             'Bank_return'=>$this->bank_return,            
         ];
 
@@ -52,10 +55,18 @@ class Verification
         return new VerificationResponse($response->json());
     }
 
-    public function vprescode(string $vprescode): self
+    public function au(string $au): self
     {
-        $this->vprescode = $vprescode;
+        $this->au = $au;
 
         return $this;
     }
+
+    public function order_id(?string $order_id): self
+    {
+        $this->order_id = $order_id;
+
+        return $this;
+    }
+
 }

@@ -24,6 +24,7 @@ class VerificationResponse
 
     public function __construct(array $result)
     {
+        dd($result);
         $this->code = $result['result'] ?? $result['result'];
 
         if ($this->success()) {

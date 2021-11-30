@@ -23,9 +23,11 @@ class RequestResponse
         $this->code = $result['result'] ?? $result['result'];
 
         if ($this->success()) {
-                    
-                    session(['au'        => $result['au']]);
-                    session(['vprescode' => $result['au']]);
+         
+            //setcookie('vprescode', $result['au'] , '10');
+            
+                    //session(['au'        => $result['au']]);
+                   // session(['vprescode' => $result['au']]);
                   /*  $_SESSION['vprescode'] =$amount;
                     $_SESSION['order']  =$order;
 */
