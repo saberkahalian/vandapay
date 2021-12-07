@@ -24,16 +24,10 @@ class VerificationResponse
 
     public function __construct(array $result)
     {
-        dd($result);
+
         $this->code = $result['result'] ?? $result['result'];
 
-        if ($this->success()) {
-            $this->cardHash = $result['data']['card_hash'];
-            $this->cardPan = $result['data']['card_pan'];
-            $this->referenceId = $result['data']['ref_id'];
-            $this->feeType = $result['data']['fee_type'];
-            $this->fee = $result['data']['fee'];
-        }
+        // $this->success();
 
     }
 

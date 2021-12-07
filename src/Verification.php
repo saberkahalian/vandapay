@@ -34,17 +34,18 @@ class Verification
     {
 
         $url = config('vandapay.verification_url');
-        $store_invoice = config('vandapay.store_invoice');
+        
+        /*$store_invoice = config('vandapay.store_invoice');
         $invoice_model = config('vandapay.invoice_model');
 
         if ($store_invoice)
         {
-          // $invoice = $invoice_model::firstOrCreate($this->bank_return);
-        }
+             $invoice = $invoice_model::firstOrCreate($this->bank_return);
+        }*/
 
         $data = [
             'pin'       => $this->pin,
-            'price'     => $this->amount,
+            'price'     => $this->amount  ,
             'order_id'  => $this->order_id,
             'vprescode' => $this->au,
             'Bank_return'=>$this->bank_return,            

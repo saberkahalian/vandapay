@@ -25,6 +25,10 @@ class Request
     private $mobile;
 
     /** @var string */
+    private $name;
+
+
+    /** @var string */
     private $email;
 
     public function __construct(string $pin_api, int $amount, string $order_id)
@@ -45,17 +49,16 @@ class Request
             'order_id'      => $this->order_id,
             "email"         => $this->email,//your customer's email optional
             "description"   => $this->description,// your  description  optional
-            "name"          =>"Reza",//your customer's name  optional
+            "name"          =>$this->name,//your customer's name  optional
             "mobile"        =>$this->mobile,//your customer's mobile  optional
             'ip'            => $_SERVER['REMOTE_ADDR'],
             'callback_type' =>2
         ];
 
 
-
         $response = Http::asJson()->acceptJson()->post($url, $data);
 
-        return new RequestResponse($response->json());
+        return new RequestResponse($response->json(),$this->order_id);
     }
 
     public function description(string $description): self
@@ -75,6 +78,13 @@ class Request
     public function mobile(string $mobile): self
     {
         $this->mobile = $mobile;
+
+        return $this;
+    }
+
+    public function name(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

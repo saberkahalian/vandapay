@@ -1,6 +1,6 @@
 <?php
 
-namespace Saber\VandaPay;
+namespace Saber\Vandapay;
 
 use Illuminate\Http\RedirectResponse;
 
@@ -18,21 +18,24 @@ class RequestResponse
     /** @var int|null */
     private $fee;
 
-    public function __construct(array $result)
+    public function __construct(array $result,$order_id)
     {
         $this->code = $result['result'] ?? $result['result'];
 
         if ($this->success()) {
-         
-            //setcookie('vprescode', $result['au'] , '10');
-            
-                    //session(['au'        => $result['au']]);
-                   // session(['vprescode' => $result['au']]);
-                  /*  $_SESSION['vprescode'] =$amount;
-                    $_SESSION['order']  =$order;
-*/
 
-            $this->authority    = $result['au'];
+/*        $store_invoice = config('vandapay.store_invoice');
+        $invoice_model = config('vandapay.invoice_model');
+
+        if ($store_invoice)
+        {
+           $data = ['order_id' => $order_id
+                        ,'au'  => $result['au']
+                    ];
+           $invoice = $invoice_model::firstOrCreate($data);
+        }*/
+
+            $this->authority     = $result['au'];
             $this->formSource    = $result['form'];
             
         }
