@@ -35,23 +35,33 @@ class Verification
 
         $url = config('vandapay.verification_url');
         
-        /*$store_invoice = config('vandapay.store_invoice');
-        $invoice_model = config('vandapay.invoice_model');
 
-        if ($store_invoice)
-        {
-             $invoice = $invoice_model::firstOrCreate($this->bank_return);
-        }*/
-
-        $data = [
+        $data = [            
             'pin'       => $this->pin,
             'price'     => $this->amount  ,
             'order_id'  => $this->order_id,
             'vprescode' => $this->au,
-            'Bank_return'=>$this->bank_return,            
+            'Bank_return'=>$this->bank_return,
         ];
 
+
         $response = Http::asJson()->acceptJson()->post($url, $data);
+        
+        $status =( $response->json()['result'] == 1 );
+
+        $store_invoice = config('vandapay.store_invoice');
+        $invoice_model = config('vandapay.invoice_model');
+
+        if ($store_invoice)
+        {
+            $invoicedata = $data;
+            unset($invoicedata['pin']);
+            unset($invoicedata['Bank_return']);
+            $invoicedata['status'] = $status ;
+            $invoice = $invoice_model::firstOrCreate($invoicedata);
+            $invoice['Bank_return'] = json_encode($data['Bank_return']);
+            $invoice->save();
+        }
 
         return new VerificationResponse($response->json());
     }

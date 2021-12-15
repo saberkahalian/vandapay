@@ -24,17 +24,6 @@ class RequestResponse
 
         if ($this->success()) {
 
-/*        $store_invoice = config('vandapay.store_invoice');
-        $invoice_model = config('vandapay.invoice_model');
-
-        if ($store_invoice)
-        {
-           $data = ['order_id' => $order_id
-                        ,'au'  => $result['au']
-                    ];
-           $invoice = $invoice_model::firstOrCreate($data);
-        }*/
-
             $this->authority     = $result['au'];
             $this->formSource    = $result['form'];
             
